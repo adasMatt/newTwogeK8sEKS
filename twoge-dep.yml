@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twoge-dep
+spec:
+  selector:
+    matchLabels:
+      app: twoge-dep
+  template:
+    metadata:
+      labels:
+        app: twoge-dep
+    spec:
+      containers:
+      - name: twoge-dep
+        image: twoge-520pm
+        ports:
+        - containerPort: 8080
+        # thanks CP classmates for readiness, liveness
+        readinessProbe: # checks to see if pod is ready for traffic
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+        livenessProbe: # checks if pod is running
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        

@@ -1,0 +1,43 @@
+# prerequisites for this to succeed when created: 1) postgresql-secrets already exists on cluster 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:    # matchLabels connects the deployment with the service right?
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres   # reference postgres docs: https://hub.docker.com/_/postgres; Haven't found anything very beneficial on kubernetes docs regarding postgres
+        env:
+          #- name: twoge-db
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-secrets   # this is why secrets has to be on the cluster
+                key: db_name
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-secrets
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-secrets
+                key: password
+
+        # everything below is autofilled by kubernetes extension on VSCode
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # ports:
+        # - containerPort: <Port>
+

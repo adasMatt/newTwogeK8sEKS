@@ -1,0 +1,13 @@
+# pulled from goldenwaste solution
+apiVersion: v1
+kind: Service
+metadata:
+  name: twoge-service
+spec:
+  type: NodePort    # node ports and load balancers are two methods to expose the service to external IP
+  ports:
+  - port: 8080      # should I change these ports or are they general to any project idk
+    targetPort: 8080
+    nodePort: 30080   # Pressy says have to change port here for something, Austin doesn't have a nodePort?
+  selector:
+    app: twoge-k8s 

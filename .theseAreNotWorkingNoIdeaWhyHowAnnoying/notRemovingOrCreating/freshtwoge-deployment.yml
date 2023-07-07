@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twoge-deployment
+spec:
+  selector:
+    # what does matchLabels here specifically refer to, do service and deployment have to match up?
+    matchLabels:
+      app: twoge-k8s
+  template:
+    metadata:
+      labels:
+        app: twoge-k8s
+    spec:
+      containers:
+      - name: twoge-container
+        image: matthawkiit/twoge-app
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+          readinessProbe: # checks to see if pod is ready for traffic
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe: # checks if pod is running
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20        

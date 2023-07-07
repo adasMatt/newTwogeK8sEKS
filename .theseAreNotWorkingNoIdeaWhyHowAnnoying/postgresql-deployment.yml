@@ -1,0 +1,55 @@
+# pulled from goldenwaste solution
+# this should be good now I think
+apiVersion: apps/v1 
+# a Deployment is the boss of pods I think
+kind: Deployment
+metadata:
+  # I have no idea why this name 'postgres' is here in metadata, down in selector.matchLabels.app, then in template.metadata.labels.app. Why 3 times? Does it make a difference if this name here is something other than postgres?
+  name: postgres
+spec:
+  replicas: 1
+  # create k8s selector. What is a selector, and where? Is it part of a node?
+  ######## Service and ReplicationController; Selecting sets of nodes https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # The set of pods that a service targets is defined with a label selector. Similarly, the population of pods that a replicationcontroller should manage is also defined with a label selector...One use case for selecting over labels is to constrain the set of nodes onto which a pod can schedule. See the documentation on node selection for more information.
+  # 
+  ######## More Practical Use Cases https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  # higher level collections such as ReplicaSets, StatefulSets, Deployments, etc. These rules allow you to configure that a set of workloads should be co-located in the same defined topology; for example, preferring to place two related Pods onto the same node...imagine a three-node cluster. You use the cluster to run a web application and also an in-memory cache (such as Redis). For this example, also assume that latency between the web application and the memory cache should be as low as is practical. You could co-locate the web servers with the cache as much as possible.
+  #
+
+  selector:
+    matchLabels:
+      # chatGPT names the selector 'postgres' rather than 'postgres-deployment' up in metadata
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        #image: mysql:8.0     # perhaps some homework needed on this, the mysql image here is from official dockerhub and mysql source perhaps?
+        image: postgres:latest    # https://hub.docker.com/_/postgres
+        # thanks chatGPT, for this code example that was written before I came up with the SQLALCHEMY thing in the other file
+        env: 
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgresql-secrets
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql-secrets
+              key: password
+        - name: POSTGRES_DB
+          value: twoge-db
+        # env:
+        #   - name: SQLALCHEMY_DATABASE
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: postgresql-secrets
+        #         key: sqlalchemy_db_uri
+        ports: 
+          - containerPort: 5432
+        
+        

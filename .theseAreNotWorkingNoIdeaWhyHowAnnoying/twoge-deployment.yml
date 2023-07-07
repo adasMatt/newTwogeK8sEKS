@@ -1,0 +1,99 @@
+# pulled and modified from goldenwaste solution
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twoge-dep
+spec:
+# create k8s selector. What is a selector, and where? Is it part of a node?
+  selector:
+    matchLabels:    # what is matchLabels, is this connecting the deployment to the service and not creating that selector here?
+      app: twoge-k8s
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: twoge-k8s
+    spec:
+      containers:
+        - name: twoge-container
+          # why did he say not to use already made Dockerfile, did he mean the previously created image too???
+          image: matthawkiit/twoge-k8s-docker-image
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+          # should/could it be 8080 for Twoge? I'm referencing goldenwaste
+          - containerPort: 8080
+          # preston has readiness probe here
+          readinessProbe: # checks to see if pod is ready for traffic
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe: # checks if pod is running
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          
+          env:
+            - name: TWOGE_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: twoge-db
+            - name: TWOGE_USER
+              valueFrom: 
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: username
+            - name: TWOGE_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: password
+            - name: TWOGE_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: database_port
+            - name: TWOGE_DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: database_url            
+# below is pulled from goldenwaste
+# env:
+#   - name: GOLDEN_DB_NAME
+#     valueFrom:
+#       secretKeyRef:
+#         name: mysql-secret
+#         key: mysql-database
+#   - name: GOLDEN_DB_USERNAME
+#     valueFrom:
+#       secretKeyRef:
+#         name: mysql-secret
+#         key: mysql-username
+#   - name: GOLDEN_DB_PASSWORD
+#     valueFrom:
+#       secretKeyRef:
+#         name: mysql-secret
+#         key: mysql-password
+#   - name: GOLDEN_DB_URL
+#     valueFrom:
+#       configMapKeyRef:
+#         name: mysql-configmap
+#         key: database_url
+#   - name: GOLDEN_DB_PORT
+#     valueFrom:
+#       configMapKeyRef:
+#         name: mysql-configmap
+#         key: database_port
+
+
+# useful k8s docs for concepts
+# Component overview: https://kubernetes.io/docs/concepts/overview/components/
+# Deployment intro: https://kubernetes.io/docs/tutorials/kubernetes-basics/deploy-app/deploy-intro/
+# wordpress with MySQL example: https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+# 

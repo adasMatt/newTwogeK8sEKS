@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # define and name service 'postgres-service' that targets pods with label 'app: postgres'
+  name: postgres-service
+spec:
+  selector:
+    app: postgres   # what exactly does this refer to, one of the three fields in postgresql-deployment.yml?
+  type: ClusterIP
+  ports:
+  - port: 5432

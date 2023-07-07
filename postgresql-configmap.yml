@@ -1,0 +1,44 @@
+# Oh, configmap is for connecting the deployment for the app with the deployment for the db?
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-config"
+  namespace: "twoge-ns"
+  labels:
+    app: "postgres"
+# configmap seems to refer to service yaml for db here?
+data: 
+  # no idea how this would work with sqlalchemy_db_uri
+  # actually don't really know what `database_url: "postgres-service"` refers to outside of this file?
+  database_url: "postgres-service"
+  database_port: "5432"
+
+# below is from the medium article: https://medium.com/@mudasiryounas/kubernetes-docker-flask-postgres-sqlalchemy-gunicorn-deploy-your-flask-application-on-57431c8cbd9f
+# why not sqlalchemy format, do I need to "hardcode" here?
+# data:
+#   POSTGRES_DB: "demo_db"
+#   POSTGRES_USER: "mudasir"
+#   POSTGRES_PASSWORD: "12345"
+
+# pulled from goldenwaste solution
+# port for mysql specified
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: mysql-configmap
+# data:
+#   database_url: "mysql-service" 
+#   database_port: "3306"
+#################################################################
+# from medium tutorial  https://medium.com/@mudasiryounas/kubernetes-docker-flask-postgres-sqlalchemy-gunicorn-deploy-your-flask-application-on-57431c8cbd9f
+# apiVersion: "v1"
+# kind: "ConfigMap"
+# metadata:
+#   name: "postgres-config"
+#   namespace: "default"
+#   labels:
+#     app: "postgres"
+# data:
+#   POSTGRES_DB: "demo_db"
+#   POSTGRES_USER: "mudasir"
+#   POSTGRES_PASSWORD: "12345"
