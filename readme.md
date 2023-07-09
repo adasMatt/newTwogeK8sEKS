@@ -9,7 +9,7 @@ Chandra's amazing [Twoge application repo](https://github.com/chandradeoarya/two
 FROM python:alpine
 
 RUN apk update && \
-    apk add --no-cache build-base libffi-dev openssl-dev
+    apk add --no-cache build-base [libffi-dev](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/.theseAreNotWorkingNoIdeaWhyHowAnnoying/otherExtras.txt) openssl-dev
 
 COPY . /app
 WORKDIR /app
