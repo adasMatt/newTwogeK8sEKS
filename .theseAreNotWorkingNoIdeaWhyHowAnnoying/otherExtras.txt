@@ -1,0 +1,18 @@
+Mattyyy: 
+waht is libffi-dev, and why do I need it in my dockerfile for a python-flask-postgres app  
+  
+ChatGPT response:
+libffi-dev is a library and development package for the Foreign Function Interface (FFI) library. The FFI library allows programming languages to call functions implemented in other languages, such as C, directly. It provides a way to bridge the gap between different programming languages.
+
+In the context of a Python-Flask-PostgreSQL application, you may need libffi-dev in your Dockerfile if your application or its dependencies utilize C extensions or libraries that require the FFI functionality.
+
+For example, if you are using libraries like cffi or cryptography in your Python code, they may rely on libffi-dev to interface with underlying C libraries. The libffi-dev package provides the necessary header files and development libraries required for the successful installation and usage of such dependencies.
+
+Including libffi-dev in your Dockerfile ensures that the required development files are present in the container during the build process, enabling the installation and usage of Python packages that depend on the FFI library.
+
+To include libffi-dev in your Dockerfile, you can use the package manager specific to the base image you're using. For example, if you're using a Debian-based image, you can include the following command:
+
+dockerfile
+Copy code
+RUN apt-get update && apt-get install -y libffi-dev
+This command will update the package lists and then install libffi-dev using the apt-get package manager within the Docker container.
