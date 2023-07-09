@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: my-app
+data:
+  DB_HOST: postgres-service
+  DB_PORT: "5432"
+  DB_NAME: mydatabase
+  DB_USER: myuser             # pretty sure these aren't needed here
+  DB_PASSWORD: mypassword

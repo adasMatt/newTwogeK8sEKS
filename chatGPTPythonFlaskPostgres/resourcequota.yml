@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-resource-quota
+  namespace: my-app
+spec:
+  hard:
+    cpu: "1"
+    memory: 1Gi
+    pods: "2"
+    requests.cpu: "0.5"
+    requests.memory: 512Mi

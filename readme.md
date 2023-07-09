@@ -99,4 +99,5 @@ eksctl create addon --name aws-ebs-csi-driver --cluster matt-k8s-eks \
 ```
 
 ### See also
-variousStruggles.md if you want to see me complain a lot and display much confusion about k8s, minikube, and docker desktop
+- variousStruggles.md if you want to see me complain a lot and display much confusion about k8s, minikube, and docker desktop
+- also see a short explanation for the cause of the terminal output of some errors in kubectlLogsForPod.txt and sometingDiffAtLeastIGuess.txt
