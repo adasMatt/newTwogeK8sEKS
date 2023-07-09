@@ -1,10 +1,7 @@
 # twoge with k8s
 
 ## prerequisites
-Twoge application repo found at: https://github.com/chandradeoarya/twoge
-
-## architecture
-link?
+Chandra's amazing [Twoge application repo](https://github.com/chandradeoarya/twoge) 
 
 ## Small things to do first
 - Create Dockerfile, build and then push image to Dockerhub
@@ -27,7 +24,7 @@ CMD python app.py
 docker build -t "matthawkiit/twoge-520pm" . 
 docker push matthawkiit/twoge-520pm 
 ```
-##############*************************************************
+
 - grab a server
 ```
 minikube start
@@ -39,12 +36,12 @@ kubemini config set-context --current --namespace=twoge-ns
 ```
 *note that my alias for "`minikube kubectl --`" is different than yours, sry :p
 
-- make twoge-quota.yml (bruh don' even have the files yet let alone WHERE DEM LINX)
+- make [twoge-quota.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/resourcequota.yml)
 ```
 kubemini create -f resourcequota.yml
 ```
 
-- make postgresql-secrets.yml & postgresql-configmap.yml (where muh linx at huh?)
+- make [postgresql-secrets.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/postgresql-fake-secrets.yml) & [postgresql-configmap.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/postgresql-configmap.yml)
 - create these and add to cluster:
 ```
 kubemini create -n twoge-ns -f postgresql-secrets.yaml      # optional to specify -n twoge-ns here since you are already working within the namespace if you ran the command containing "set-context" above
@@ -55,7 +52,7 @@ kubemini create -f postgresql-configmap.yml                 # namespace field is
 ## Next: Starting with database setup 
 Now that there are the necessary secrets and configmap objects(?) running(?) on the cluster & namespace(?), the deployments and services that depend on them to function properly can be created.
 
-- make postgres-deploy.yml & postgres-service.yml (where dem linx)
+- make [postgres-deploy.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/postgres-deploy.yml) & [postgres-service.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/postgres-service.yml)  
 - create them and add to cluster:
 ```
 kubemini apply -f postgres-deploy.yml 
@@ -64,13 +61,15 @@ kubemini apply -f postgres-service.yml
 
 ## An Application: Finally :) 
   
-- make twoge-deploy.yml & twoge-service.yml (mo' linx plz)
+- make [twoge-deploy.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/twoge-dep.yml) & [twoge-service.yml](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/twoge-service.yml)
 - create and add to cluster:
 ```
 kubemini create -f twoge-deploy.yaml
 kubemini create -f twoge-service.yml
 ```
 -- this should be the point where minikube dashboard should show a deployment running and Twoge application should be accessible somehow (localhost? minikube IP somewhere?).  I keep having some kind of problem, my db deployment is not even working 2nd time around with all new files and in the new namespace
+
+![architecture image](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/images/k8sClusterArchitecture.png "k8s architecture")
 
 ## EKS part (untested)
 
@@ -99,5 +98,5 @@ eksctl create addon --name aws-ebs-csi-driver --cluster matt-k8s-eks \
 ```
 
 ### See also
-- variousStruggles.md if you want to see me complain a lot and display much confusion about k8s, minikube, and docker desktop
-- also see a short explanation for the cause of the terminal output of some errors in kubectlLogsForPod.txt and sometingDiffAtLeastIGuess.txt
+- [variousStruggles.md](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/.theseAreNotWorkingNoIdeaWhyHowAnnoying/variousStruggles.md) if you want to see a cluster truck and me complaining and displaying some confusion about k8s, minikube, and docker desktop, or my early lack of understanding of those subjects.
+- also see a short explanation for the cause of the terminal output of some errors in [kubectlLogsForPod.txt](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/.theseAreNotWorkingNoIdeaWhyHowAnnoying/kubectlLogsForPod.txt) and [sometingDiffAtLeastIGuess.txt](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/.theseAreNotWorkingNoIdeaWhyHowAnnoying/somethingDiffAtLeastIGuess.txt)
