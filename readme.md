@@ -9,7 +9,7 @@ Chandra's amazing [Twoge application repo](https://github.com/chandradeoarya/two
 FROM python:alpine
 
 RUN apk update && \
-    apk add --no-cache build-base [libffi-dev](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/.theseAreNotWorkingNoIdeaWhyHowAnnoying/otherExtras.txt) openssl-dev
+    apk add --no-cache build-base libffi-dev openssl-dev
 
 COPY . /app
 WORKDIR /app
@@ -19,6 +19,7 @@ RUN pip install -r requirements.txt
 EXPOSE 8080
 CMD python app.py
 ```
+*for Adam btw, short/iffy answer for what [libffi-dev](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/.theseAreNotWorkingNoIdeaWhyHowAnnoying/otherExtras.txt) is that it has something to do with allowing other languages to call C functions  
 
 ```
 docker build -t "matthawkiit/twoge-520pm" . 
