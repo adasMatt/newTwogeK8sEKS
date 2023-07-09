@@ -19,11 +19,9 @@
 
 - I forgot to use resourcequota in this, which that should be a simple fix but I've gone down this rabbit hole enough for now and should get back to the main project or write and architecture diagram for this.
 
-Images of project working:
-image1  
-image2  
-![image1](https://github.com/adasMatt/newTwogeK8s/blob/master/images/image1.jpg "image1")
-![image2](https://github.com/adasMatt/newTwogeK8s/blob/master/images/image2.jpg "image2")
+Images of project working:  
+![image1](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/images/chatGPTPyFlWebBrowser.png "app shown in web browser on localhost:5000")
+![image2](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/images/chatGPTPythonFlaskPostgres.png "terminal output of application running and accessible through localhost:5000")
 
 
 
