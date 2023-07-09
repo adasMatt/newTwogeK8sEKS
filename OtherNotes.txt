@@ -1,0 +1,38 @@
+Where am I now?
+Wrote a couple files for deploy and service, basically only copied from the last goldenwaste project
+Need to configure container pod/deployment (right?) for db next, have a terraform file from Austin’s project with database details but using Docker and/or K8s might be a bit diff?
+Ran chatGPT query to check most basic yaml file to deploy and service db
+Haven’t changed env details or made secrets file, is config.cfg the same purpose a secrets yaml file?
+What’s the diff between creating the db user and then logging in to launch the app? Still very unclear on the logical direction of how the db links to the app I guess
+Db created where, all 4 yaml files? (postgresql-deployment.yml, postgresql-service.yml, postgresql-secrets.yml, postgresql-configmap?)
+Db user and such created when and where (config.cfg? postgresql-secrets.yml?)
+Db accessed from where and how (app.py? app.config.from_pyfile('config.cfg')?)
+Need to figure out what the details of the deployment are? Where is this db container going to be, just in Docker?
+How does minikube vs AWS RDS fit into this, or is that even a proper question? Need to do both for project anyway apparently
+Let’s make an RDS and use that for dockerfile whatever
+Configmap connects to db service, db service connects to db deployment?
+
+
+I was getting errors last night about …
+
+Minikube, docker, issues with something… minikube not starting
+Trying to update docker desktop, it was not automatically updating, update alone did not work, still cannot start minikube successfully, trying to restart PC now that docker is updated
+What next: Try microkube instead of minikube? check minikube for update? Uninstall-reinstall minikube? Uninstall-reinstall docker? Restarting the PC worked actually, wtf Docker
+
+Cute thoughts/outline/motivation
+K8s & Docker help developers deploy applications by building the pipeline of: application, containers/servers, nodes, cluster
+In more detail I need to:
+Clone the app to build a docker image
+Run the app on a container(s) through K8s pod/deployment which includes:
+installation
+App Db setup
+Do I need a volume mount?
+
+
+Other references for this:
+Previous Twoge assessment with Docker & CICD
+Docker docs
+K8s docs
+Chandra, Adam, Sky, Joel, other classmates
+CP DevOps repo
+YT, discord
