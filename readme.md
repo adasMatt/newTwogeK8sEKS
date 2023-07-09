@@ -25,7 +25,7 @@ docker build -t "matthawkiit/twoge-520pm" .
 docker push matthawkiit/twoge-520pm 
 ```
 
-- grab a server
+- grab a k8s distribution tool (EKS later)
 ```
 minikube start
 ```
