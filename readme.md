@@ -25,7 +25,9 @@ CMD python app.py
 docker build -t "matthawkiit/twoge-520pm" . 
 docker push matthawkiit/twoge-520pm 
 ```
-
+## Architecture of K8s deployments and services
+![architecture image](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/images/k8sClusterArchitecture.png "k8s architecture")  
+  
 - Grab a k8s distribution tool (EKS later)
 ```
 minikube start
@@ -69,8 +71,6 @@ kubemini create -f twoge-deploy.yaml
 kubemini create -f twoge-service.yml
 ```
 -- This should be the point where minikube dashboard should show a deployment running and Twoge application should be accessible somehow (localhost? minikube IP somewhere?).  I keep having some kind of problem, my db deployment is not even working 2nd time around with all new files and in the new namespace
-
-![architecture image](https://github.com/adasMatt/newTwogeK8sEKS/blob/master/images/k8sClusterArchitecture.png "k8s architecture")
 
 ## EKS part (untested)
 
